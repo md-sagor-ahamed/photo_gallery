@@ -99,14 +99,14 @@ const UI = {
         const {storage, previewPhotos, closeBtn} = this.loadSelector();
         storage.addEventListener("click", () => {
             for(let i = 0; i < storage.children.length; i++){
-                storage.children[i].addEventListener('click', ()=>{
-                    console.log(i);
-                    this.displayImage(i)
-                    previewPhotos.classList.add("show");
+                storage.children[i].addEventListener('click', (e)=>{
+                    if(e.target.classList.contains("image")){
+                        this.displayImage(i)
+                        previewPhotos.classList.add("show");
+                    }
                 })
             }
         })
-
         closeBtn.addEventListener("click", ()=> {
             previewPhotos.classList.remove("show")
         })
