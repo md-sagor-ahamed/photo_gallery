@@ -81,7 +81,7 @@ const UI = {
             result += `
                         <div class="photo-card">
                         <div class="card-image">
-                            <img src="${item.urls.thumb}" class="image" alt="">
+                            <img src="${item.urls.thumb}" class="image" id=${item.id} alt="">
                         </div>
                         <h2 class="card-title">${item.alt_description.slice(0,16)}......</h2>
                         <p class="decription">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic tempore eligendi ipsa autem quas, ipsum exercitationem perspiciatis debitis aliquid nesciunt aperiam. Numquam eveniet laborum impedit.</p>
@@ -91,22 +91,19 @@ const UI = {
         storage.innerHTML = result;
     },
     displayImage(index){
-        const {photos,storage, showImage} = this.loadSelector();
-        let item = storage.children[index].querySelector("img").src;
+        const {showImage} = this.loadSelector();
+        let item = document.getElementById(index).src;
         showImage.src = item
     },
     async init(){
         const {storage, previewPhotos, closeBtn} = this.loadSelector();
-        storage.addEventListener("click", () => {
-            for(let i = 0; i < storage.children.length; i++){
-                storage.children[i].addEventListener('click', (e)=>{
+                storage.addEventListener('click', (e)=>{
                     if(e.target.classList.contains("image")){
-                        this.displayImage(i)
+                        const item = e.target.id
+                        this.displayImage(item)
                         previewPhotos.classList.add("show");
                     }
                 })
-            }
-        })
         closeBtn.addEventListener("click", ()=> {
             previewPhotos.classList.remove("show")
         })
